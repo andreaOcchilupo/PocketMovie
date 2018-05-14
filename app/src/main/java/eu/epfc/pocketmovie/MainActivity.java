@@ -5,6 +5,7 @@ package eu.epfc.pocketmovie;
 * andreajean
 * key : ea2dcee690e0af8bb04f37aa35b75075
 * https://trello.com/b/HnDSqnM5/pocketmovies
+* images http://image.tmdb.org/t/p/w185/
 * */
 
 import android.content.BroadcastReceiver;
@@ -13,6 +14,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -25,14 +28,26 @@ import java.util.List;
 import eu.epfc.pocketmovie.model.Film;
 import eu.epfc.pocketmovie.model.HttpRequestService;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SWFilmsAdapter.ListItemClickListener{
 
     private HttpRequestService httpRequestService = new HttpRequestService();
+    private RecyclerView filmRecyclerView;
+    SWFilmsAdapter swFilmsAdapter;
+    private List<Film> films;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        films = new ArrayList<>();
+        filmRecyclerView = findViewById(R.id.recyclerview_films);
+
+        swFilmsAdapter = new SWFilmsAdapter(this);
+        filmRecyclerView.setAdapter(swFilmsAdapter);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        filmRecyclerView.setLayoutManager(layoutManager);
 
         HttpReceiver httpReceiver = new HttpReceiver();
         IntentFilter intentFilter = new IntentFilter();
@@ -41,11 +56,15 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(httpReceiver, intentFilter);
 
         String urlString = String.format(PMHelper.URL_POPULAR, 1, PMHelper.KEY);
+        System.out.println("URL : " + urlString);
         HttpRequestService.startActionRequestHttp(getApplicationContext(), urlString);
+
+
+        swFilmsAdapter.setFilms(films);
     }
 
     private List<Film> parseTopStoriesResponse(String jsonString) {
-        ArrayList<Film> articles = new ArrayList<>();
+        ArrayList<Film> films = new ArrayList<>();
 
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
@@ -69,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Film newFilm = new Film(title, poster, backdrop, rate, release, summary, trailer, genres);
 
-                articles.add(newFilm);
+                films.add(newFilm);
             }
 
         } catch (JSONException e) {
@@ -77,7 +96,16 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        return articles;
+        return films;
+    }
+
+    @Override
+    public void onListItemClick(int clickedItemIndex) {
+
+        Film film = films.get(clickedItemIndex);
+
+        System.out.println("Item clicked " + clickedItemIndex);
+        //TODO : detail activity
     }
 
     private class HttpReceiver extends BroadcastReceiver {
@@ -85,18 +113,20 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
 
             if (intent.getAction().equals("httpRequestComplete")) {
+                System.out.println("request complete");
 
                 // get the JSON response from the intent
                 String response = intent.getStringExtra("responseString");
 
                 // parse the JSON into articles
-                List<Film> films = parseTopStoriesResponse(response);
+                films = parseTopStoriesResponse(response);
 
                 // update the RecyclerView
-                //articlesAdapter.setArticles(articles);TODO
+                swFilmsAdapter.setFilms(films);
+
 
                 // save those articles in the database
-                //SavedArticlesManager.getInstance().saveArticles(articles);TODO
+                //SavedArticle sManager.getInstance().saveArticles(articles);TODO
             }
 
             // else, if the request failed
@@ -104,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // List<Film> articles = SavedArticlesManager.getInstance().getAllArticles();TODO
                 // articlesAdapter.setArticles(articles);TODO
+                System.out.println("error:  ");
             }
         }
     }

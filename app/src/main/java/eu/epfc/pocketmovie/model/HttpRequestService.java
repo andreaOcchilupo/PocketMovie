@@ -36,8 +36,10 @@ public class HttpRequestService extends IntentService {
         if (intent != null) {
 
             final String url = intent.getStringExtra(EXTRA_KEY_URL);
+            System.out.println(this.getClass().getName() + " - url param " + url);
             try {
                 String responseString = startRequest(url);
+                System.out.println(this.getClass().getName() + " - response " + responseString);
 
                 // the request succeeded -> send a brodcase message "httpRequestComplete"
                 Intent completeIntent = new Intent("httpRequestComplete");
@@ -48,6 +50,7 @@ public class HttpRequestService extends IntentService {
 
                 // the request failed -> send a brodcase message "httpRequestFailed"
                 Intent completeIntent = new Intent("httpRequestFailed");
+                System.out.println(this.getClass().getName() + " - exception: " + e.toString());
                 sendBroadcast(completeIntent);
             }
         }
@@ -56,7 +59,9 @@ public class HttpRequestService extends IntentService {
     private String startRequest(String url) throws IOException {
 
         Request request = new Request.Builder().url(url).build();
-        Response response = httpClient.newCall(request).execute();
+        System.out.println(this.getClass().getName() + " startRequest begin");
+        Response response = httpClient.newCall(request).execute();  // blocking HTTP call
+        System.out.println(this.getClass().getName() + " startRequest end");
         return   response.body().string();
     }
 }
