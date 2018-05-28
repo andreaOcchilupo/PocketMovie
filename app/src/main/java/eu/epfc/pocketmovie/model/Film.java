@@ -1,5 +1,7 @@
 package eu.epfc.pocketmovie.model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -15,14 +17,35 @@ public class Film {
     private String releaseDate;
     private String summary;
     private String trailer;
-    private ArrayList<Integer> genres;
+    private ArrayList<Integer> genders;
 
-    public ArrayList<Integer> getGenres() {
-        return genres;
+    public ArrayList<Integer> getGenders() {
+        return genders;
     }
 
-    public void setGenres(ArrayList<Integer> genres) {
-        this.genres = genres;
+    public String getGendersString() {
+        String result = "";
+        int i = 0;
+        for (; i<genders.size()-1; i++) {
+            result += (genders.get(i) + ",");
+        }
+        return result + genders.get(i);
+    }
+
+    public void setGenders(ArrayList<Integer> genders) {
+        this.genders = genders;
+    }
+
+    public void setGenders(String genders) {
+        try {
+            String[] list = genders.split(genders);
+            this.genders = new ArrayList<Integer>();
+            for (String item: list) {
+                this.genders.add(Integer.parseInt(item));
+            }
+        } catch (Exception ex) {
+            Log.d(getClass().getName(), "setGenders: crashed \n" + ex.toString());
+        }
     }
 
     public String getTitle() {
@@ -81,7 +104,7 @@ public class Film {
         this.backdrop = backdrop;
     }
 
-    public Film(String title, String poster,String backdrop, double rate, String releaseDate, String summary, String trailer, ArrayList<Integer> genres) {
+    public Film(String title, String poster,String backdrop, double rate, String releaseDate, String summary, String trailer, ArrayList<Integer> genders) {
         this.title = title;
         this.poster = poster;
         this.backdrop = backdrop;
@@ -89,7 +112,18 @@ public class Film {
         this.releaseDate = releaseDate;
         this.summary = summary;
         this.trailer = trailer;
-        this.genres = genres;
+        this.genders = genders;
+    }
+
+    public Film(String title, String poster,String backdrop, double rate, String releaseDate, String summary, String trailer, String genders) {
+        this.title = title;
+        this.poster = poster;
+        this.backdrop = backdrop;
+        this.rate = rate;
+        this.releaseDate = releaseDate;
+        this.summary = summary;
+        this.trailer = trailer;
+        //this.setGenders( genders);
     }
 
     public Film(){

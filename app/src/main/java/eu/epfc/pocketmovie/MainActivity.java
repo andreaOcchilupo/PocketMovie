@@ -59,8 +59,10 @@ public class MainActivity extends AppCompatActivity implements SWFilmsAdapter.Li
         System.out.println("URL : " + urlString);
         HttpRequestService.startActionRequestHttp(getApplicationContext(), urlString);
 
-
         swFilmsAdapter.setFilms(films);
+
+        // Initialise le manager de FilmDB
+        SavedFilmManager.getInstance().initWithContext(getApplicationContext());
     }
 
     private List<Film> parseTopStoriesResponse(String jsonString) {

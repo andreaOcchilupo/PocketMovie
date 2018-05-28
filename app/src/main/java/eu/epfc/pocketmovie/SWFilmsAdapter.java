@@ -59,7 +59,6 @@ class SWFilmsAdapter extends RecyclerView.Adapter<SWFilmsAdapter.FilmViewHolder>
         TextView title =  viewGroup.findViewById(R.id.text_title);
         title.setText(film.getTitle());
         TextView rating = viewGroup.findViewById(R.id.text_rating);
-        // TODO demander s'il n'y a pas plus simple car c'est surprenant
         rating.setText( viewGroup.getContext().getResources().getString(R.string.rating) + String.valueOf(film.getRate()));
 
         try{
