@@ -94,7 +94,7 @@ class SavedFilmManager {
                     "RELEASE_DATE TEXT," +
                     "SUMMARY TEXT," +
                     "TRAILER TEXT," +
-                    "GENDERS TEXT";
+                    "GENDERS TEXT)";
             sqLiteDatabase.execSQL(statement);
         }
 

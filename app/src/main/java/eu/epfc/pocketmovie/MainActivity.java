@@ -126,17 +126,17 @@ public class MainActivity extends AppCompatActivity implements SWFilmsAdapter.Li
                 // update the RecyclerView
                 swFilmsAdapter.setFilms(films);
 
+                // save those films in the database
+                SavedFilmManager.getInstance().saveFilms(films);
 
-                // save those articles in the database
-                //SavedArticle sManager.getInstance().saveArticles(articles);TODO
+                // List<Film> films = SavedFilmManager.getInstance().getAllFims(); // for test
             }
 
             // else, if the request failed
             else if (intent.getAction().equals("httpRequestFailed")) {
+                List<Film> films = SavedFilmManager.getInstance().getAllFims();
+                swFilmsAdapter.setFilms(films);
 
-                // List<Film> articles = SavedArticlesManager.getInstance().getAllArticles();TODO
-                // articlesAdapter.setArticles(articles);TODO
-                System.out.println("error:  ");
             }
         }
     }
