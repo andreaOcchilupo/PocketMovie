@@ -36,6 +36,20 @@
         app:layout_constraintTop_toBottomOf="@+id/text_title"
         tools:text="Rating: 7.5" />
 
+    <TextView
+        android:id="@+id/text_next_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:textSize="20dp"
+        android:visibility="invisible"
+        android:text="@string/next_page"
+        android:textColor="@color/text_base"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/image_poster"
         android:layout_width="90dp"

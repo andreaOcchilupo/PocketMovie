@@ -132,16 +132,18 @@ class SavedFilmManager {
                         "_id", "TITLE", "POSTER", "BACKDROP", "RATE", "RELEASE_DATE", "SUMMARY", "TRAILER", "GENDERS"
                 }, null, null, null, null, null);
                 // TODO check if for loop is necessary
-                while (cursor.moveToNext()) {
-                    String title = cursor.getString(1);
-                    String poster = cursor.getString(2);
-                    String backdrop = cursor.getString(3);
-                    Double rate = cursor.getDouble(4);
-                    String releaseDate = cursor.getString(5);
-                    String summary = cursor.getString(6);
-                    String trailer = cursor.getString(7);
-                    String genders = cursor.getString(8);
-                    films.add(new Film(title, poster, backdrop, rate, releaseDate, summary, trailer, genders));
+                for(int i=0; i<cursor.getCount(); i++) {
+                    if (cursor.moveToNext()) {
+                        String title = cursor.getString(1);
+                        String poster = cursor.getString(2);
+                        String backdrop = cursor.getString(3);
+                        Double rate = cursor.getDouble(4);
+                        String releaseDate = cursor.getString(5);
+                        String summary = cursor.getString(6);
+                        String trailer = cursor.getString(7);
+                        String genders = cursor.getString(8);
+                        films.add(new Film(title, poster, backdrop, rate, releaseDate, summary, trailer, genders));
+                    }
                 }
             } catch (Exception ex) {
                 Log.d(getClass().getName(), "getAllFilms: crashed \n" + ex.toString());

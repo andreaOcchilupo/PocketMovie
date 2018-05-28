@@ -136,7 +136,6 @@ public class MainActivity extends AppCompatActivity implements SWFilmsAdapter.Li
             else if (intent.getAction().equals("httpRequestFailed")) {
                 List<Film> films = SavedFilmManager.getInstance().getAllFims();
                 swFilmsAdapter.setFilms(films);
-
             }
         }
     }
