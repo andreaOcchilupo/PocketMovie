@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PocketMovie</string>
+    <string name="rating">Rating :\u0020</string>
 </resources>
