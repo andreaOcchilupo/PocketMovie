@@ -2,13 +2,14 @@ package eu.epfc.pocketmovie.model;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by 0107anocchilupo on 7/05/2018.
  */
 
-public class Film {
+public class Film implements Serializable {
 
     private String title;
     private String poster;//file

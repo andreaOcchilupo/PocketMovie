@@ -17,10 +17,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,9 +107,11 @@ public class MainActivity extends AppCompatActivity implements SWFilmsAdapter.Li
     public void onListItemClick(int clickedItemIndex) {
 
         Film film = films.get(clickedItemIndex);
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("filmObject", film);
+        startActivity(intent);
 
         System.out.println("Item clicked " + clickedItemIndex);
-        //TODO : detail activity
     }
 
     private class HttpReceiver extends BroadcastReceiver {

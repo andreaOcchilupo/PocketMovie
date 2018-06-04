@@ -7,7 +7,7 @@
     android:background="@color/background_base">
 
     <TextView
-        android:id="@+id/text_title"
+        android:id="@+id/text_app_name"
         android:layout_width="0dp"
         android:layout_height="19dp"
 
@@ -15,7 +15,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="50dp"
-        android:textColor="@color/text_base"
         android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,16 +23,15 @@
         tools:text="Zootopia" />
 
     <TextView
-        android:id="@+id/text_rating"
+        android:id="@+id/text_title"
         android:layout_width="0dp"
         android:layout_height="20dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:textColor="@color/text_base"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_poster"
-        app:layout_constraintTop_toBottomOf="@+id/text_title"
+        app:layout_constraintTop_toBottomOf="@+id/text_app_name"
         tools:text="Rating: 7.5" />
 
     <TextView
@@ -45,7 +43,6 @@
         android:textSize="20dp"
         android:visibility="invisible"
         android:text="@string/next_page"
-        android:textColor="@color/text_base"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

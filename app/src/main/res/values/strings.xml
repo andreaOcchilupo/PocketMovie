@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">PocketMovie</string>
-    <string name="rating">Rating :\u0020</string>
+    <string name="rating">Rating:</string>
     <string name="next_page">Next Page ...</string>
+    <string name="video">VIDEO</string>
+    <string name="pocket">Pocket</string>
 </resources>
