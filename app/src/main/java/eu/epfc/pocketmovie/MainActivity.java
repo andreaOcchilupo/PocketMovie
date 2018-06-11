@@ -17,32 +17,30 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import eu.epfc.pocketmovie.model.Film;
 import eu.epfc.pocketmovie.model.HttpRequestService;
+import eu.epfc.pocketmovie.model.PMModel;
 
 public class MainActivity extends AppCompatActivity implements SWFilmsAdapter.ListItemClickListener{
 
     private HttpRequestService httpRequestService = new HttpRequestService();
     private RecyclerView filmRecyclerView;
     SWFilmsAdapter swFilmsAdapter;
-    private List<Film> films;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        films = new ArrayList<>();
+        List<Film> films = PMModel.getInstance().getFilms();
         filmRecyclerView = findViewById(R.id.recyclerview_films);
 
         swFilmsAdapter = new SWFilmsAdapter(this);
@@ -106,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements SWFilmsAdapter.Li
     @Override
     public void onListItemClick(int clickedItemIndex) {
 
-        Film film = films.get(clickedItemIndex);
+        Film film = PMModel.getInstance().getFilms().get(clickedItemIndex);
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra("filmObject", film);
         startActivity(intent);
@@ -125,7 +123,10 @@ public class MainActivity extends AppCompatActivity implements SWFilmsAdapter.Li
                 String response = intent.getStringExtra("responseString");
 
                 // parse the JSON into articles
-                films = parseTopStoriesResponse(response);
+                List<Film> films = parseTopStoriesResponse(response);
+
+                // update singleton
+                PMModel.getInstance().setFilms(films);
 
                 // update the RecyclerView
                 swFilmsAdapter.setFilms(films);
@@ -139,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements SWFilmsAdapter.Li
             // else, if the request failed
             else if (intent.getAction().equals("httpRequestFailed")) {
                 List<Film> films = SavedFilmManager.getInstance().getAllFims();
+                PMModel.getInstance().setFilms(films);
                 swFilmsAdapter.setFilms(films);
             }
         }
