@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     tools:context="eu.epfc.pocketmovie.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview_films"
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="eu.epfc.pocketmovie.MainFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" />
 
-    </android.support.v7.widget.RecyclerView>
 </LinearLayout>
