@@ -3,6 +3,7 @@ package eu.epfc.pocketmovie;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -52,6 +53,20 @@ class SavedFilmManager {
      */
     public List<Film> getAllFims() {
         return filmDataBaseHelper.getAllFilms();
+    }
+
+
+
+    public void addFilm(Film film) {
+        filmDataBaseHelper.addFilm(film);
+    }
+
+    public void removeFilm(Film film) {
+        filmDataBaseHelper.removeFilm(film);
+    }
+
+    public boolean contains(Film film) {
+        return getAllFims().contains(film);
     }
 
 
@@ -151,6 +166,12 @@ class SavedFilmManager {
                 if(cursor != null) cursor.close();
             }
             return films;
+        }
+
+        public void removeFilm(Film film) {
+            String title = DatabaseUtils.sqlEscapeString(film.getTitle());
+            String statement = "DELETE FROM FILM WHERE title = " + title;
+            getWritableDatabase().execSQL(statement);
         }
     }
 }

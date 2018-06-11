@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
     }
 
     @Override
@@ -43,6 +46,20 @@ public class DetailActivity extends AppCompatActivity {
         } else {
             title.setText( "Sorry, unexpected error");
         }
+        CheckBox favorite = findViewById(R.id.checkBox_pocket);
+        favorite.setChecked(isFavorite(film));
+        favorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // TODO save in DB
+                if(isChecked) {
+                    SavedFilmManager.getInstance().addFilm(film);
+                } else {
+                    SavedFilmManager.getInstance().removeFilm(film);
+                }
+            }
+        });
+
     }
 
     public void onClickButtonVideo(View v) {
@@ -51,6 +68,10 @@ public class DetailActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:"+videoId));
         intent.putExtra("VIDEO_ID", videoId);
         startActivity(intent);
+    }
+
+    private boolean isFavorite(Film film) {
+        return SavedFilmManager.getInstance().contains(film);
     }
 
 

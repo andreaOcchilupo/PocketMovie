@@ -39,8 +39,8 @@ public class Film implements Serializable {
 
     public void setGenders(String genders) {
         try {
-            String[] list = genders.split(genders);
-            this.genders = new ArrayList<Integer>();
+            String[] list = genders.split(",");
+            this.genders = new ArrayList<>();
             for (String item: list) {
                 this.genders.add(Integer.parseInt(item));
             }
@@ -124,10 +124,38 @@ public class Film implements Serializable {
         this.releaseDate = releaseDate;
         this.summary = summary;
         this.trailer = trailer;
-        //this.setGenders( genders);
+        this.setGenders( genders);
     }
 
     public Film(){
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Film film = (Film) o;
+
+        if (title != null ? !title.equals(film.title) : film.title != null) return false;
+        if (releaseDate != null ? !releaseDate.equals(film.releaseDate) : film.releaseDate != null)
+            return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = title != null ? title.hashCode() : 0;
+        result = 31 * result + (poster != null ? poster.hashCode() : 0);
+        result = 31 * result + (backdrop != null ? backdrop.hashCode() : 0);
+        temp = Double.doubleToLongBits(rate);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (releaseDate != null ? releaseDate.hashCode() : 0);
+        result = 31 * result + (summary != null ? summary.hashCode() : 0);
+        result = 31 * result + (trailer != null ? trailer.hashCode() : 0);
+        result = 31 * result + (genders != null ? genders.hashCode() : 0);
+        return result;
     }
 }
