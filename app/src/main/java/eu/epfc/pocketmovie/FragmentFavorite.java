@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -21,7 +22,6 @@ import eu.epfc.pocketmovie.model.HttpRequestService;
  */
 public class FragmentFavorite extends Fragment implements SWFilmsAdapter.ListItemClickListener {
 
-    private HttpRequestService httpRequestService = new HttpRequestService();
     private RecyclerView filmRecyclerView;
     SWFilmsAdapter swFilmsAdapter;
 
@@ -51,7 +51,6 @@ public class FragmentFavorite extends Fragment implements SWFilmsAdapter.ListIte
         filmRecyclerView.setLayoutManager(layoutManager);
 
         swFilmsAdapter.setFilms(films);
-
     }
 
 

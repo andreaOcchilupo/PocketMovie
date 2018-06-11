@@ -141,7 +141,6 @@ public class FragmentOnline extends Fragment  implements SWFilmsAdapter.ListItem
 
                 // update the RecyclerView
                 swFilmsAdapter.setFilms(films);
-
             }
 
             // else, if the request failed

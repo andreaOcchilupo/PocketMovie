@@ -20,7 +20,6 @@ import eu.epfc.pocketmovie.model.Film;
 
 class SWFilmsAdapter extends RecyclerView.Adapter<SWFilmsAdapter.FilmViewHolder>{
 
-
     public interface ListItemClickListener{
         void onListItemClick(int clickedItemIndex);
     }
