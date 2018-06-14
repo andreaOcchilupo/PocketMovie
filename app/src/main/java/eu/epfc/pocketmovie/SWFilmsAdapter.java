@@ -49,6 +49,12 @@ class SWFilmsAdapter extends RecyclerView.Adapter<SWFilmsAdapter.FilmViewHolder>
     }
 
     @Override
+    public int getItemCount() {
+        return (films == null) ? 0 : films.size();
+    }
+
+
+    @Override
     public void onBindViewHolder(FilmViewHolder holder, int position) {
         Log.d(this.getClass().getName(), "BEFORE TRY CATCH ");
 
@@ -58,31 +64,14 @@ class SWFilmsAdapter extends RecyclerView.Adapter<SWFilmsAdapter.FilmViewHolder>
         TextView title = viewGroup.findViewById(R.id.text_app_name);
         TextView rating = viewGroup.findViewById(R.id.text_title);
         ImageView poster = viewGroup.findViewById(R.id.image_poster);
-        // ok this a hack but it should work
-        if(!isLast & this instanceof OnlineFilmsAdapter) {
-            if(films.size() != 0) {
-                Film film = films.get(position);
-                title.setText(film.getTitle());
-                rating.setText(viewGroup.getContext().getResources().getString(R.string.rating) + String.valueOf(film.getRate()));
+        if(films.size() != 0) {
+            Film film = films.get(position);
+            title.setText(film.getTitle());
+            rating.setText(viewGroup.getContext().getResources().getString(R.string.rating) + String.valueOf(film.getRate()));
 
-                PMHelper.setImageView(poster, film.getPoster());
-                Log.d(this.getClass().getName(), "END TRY CATCH ");
-            }
-        } else {
-            title.setVisibility(View.INVISIBLE);
-            rating.setVisibility(View.INVISIBLE);
-            poster.setVisibility(View.INVISIBLE);
-            TextView nextPage = viewGroup.findViewById(R.id.text_next_page);
-            nextPage.setVisibility(View.VISIBLE);
-            Log.d("test", "onBindViewHolder: size " + films.size() + " / position " + position);
+            PMHelper.setImageView(poster, film.getPoster());
+            Log.d(this.getClass().getName(), "END TRY CATCH ");
         }
-
-    }
-
-
-    @Override
-    public int getItemCount() {
-        return (films == null) ? 0 : films.size() + 1;
     }
 
 
