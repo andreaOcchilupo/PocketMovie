@@ -44,7 +44,7 @@ public class FragmentFavorite extends Fragment implements SWFilmsAdapter.ListIte
 
         filmRecyclerView = getView().findViewById(R.id.recyclerview_films);
 
-        swFilmsAdapter = new SWFilmsAdapter(this);
+        swFilmsAdapter = new FavoriteFilmsAdapter(this);
         filmRecyclerView.setAdapter(swFilmsAdapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

@@ -54,7 +54,7 @@ public class FragmentOnline extends Fragment  implements SWFilmsAdapter.ListItem
 
         filmRecyclerView = getView().findViewById(R.id.recyclerview_films);
 
-        swFilmsAdapter = new SWFilmsAdapter(this);
+        swFilmsAdapter = new OnlineFilmsAdapter(this);
         filmRecyclerView.setAdapter(swFilmsAdapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

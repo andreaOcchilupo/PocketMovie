@@ -25,7 +25,7 @@ class SWFilmsAdapter extends RecyclerView.Adapter<SWFilmsAdapter.FilmViewHolder>
     }
 
     final private ListItemClickListener listItemClickListener;
-    private List<Film> films;
+    protected List<Film> films;
 
 
     SWFilmsAdapter(ListItemClickListener listItemClickListener) {
@@ -58,7 +58,8 @@ class SWFilmsAdapter extends RecyclerView.Adapter<SWFilmsAdapter.FilmViewHolder>
         TextView title = viewGroup.findViewById(R.id.text_app_name);
         TextView rating = viewGroup.findViewById(R.id.text_title);
         ImageView poster = viewGroup.findViewById(R.id.image_poster);
-        if(!isLast) {
+        // ok this a hack but it should work
+        if(!isLast & this instanceof OnlineFilmsAdapter) {
             if(films.size() != 0) {
                 Film film = films.get(position);
                 title.setText(film.getTitle());
@@ -83,6 +84,7 @@ class SWFilmsAdapter extends RecyclerView.Adapter<SWFilmsAdapter.FilmViewHolder>
     public int getItemCount() {
         return (films == null) ? 0 : films.size() + 1;
     }
+
 
     public class FilmViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
